@@ -2,14 +2,13 @@ import puppeteer from "puppeteer";
 import { fork } from "child_process";
 
 describe("test popover", () => {
-  let browser = null;
-  let page = null;
-  let server = null;
+  let browser
+  let page
+  let server
 
-  const baseUrl = "http://localhost:8082";
+  const baseUrl = "http://localhost:8080";
 
   beforeAll(async () => {
-    // server = fork("src/js/e2e/e2e.server.js");
     server = fork(`${__dirname}/e2e.server.js`);
     await new Promise((resolve, reject) => {
       server.on("error", reject);
@@ -22,10 +21,9 @@ describe("test popover", () => {
 
     browser = await puppeteer.launch(
       {
-        headless: false, // show gui
+        headless: false,
         slowMo: 1000,
         args: ["--no-sandbox"],
-        // devtools: true, // show devTools
       },
       1000
     );
